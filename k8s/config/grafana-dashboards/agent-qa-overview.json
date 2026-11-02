@@ -1,0 +1,16 @@
+{
+  "uid": "agent-qa-overview",
+  "title": "Agent QA · 运行状态",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "panels": [
+    { "id": 1, "type": "timeseries", "title": "问答队列", "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }, "targets": [ { "expr": "agentqa_chat_jobs{state=\"waiting\"}", "legendFormat": "等待中" }, { "expr": "agentqa_chat_jobs{state=\"active\"}", "legendFormat": "处理中" }, { "expr": "agentqa_model_slots_active", "legendFormat": "模型并发" } ] },
+    { "id": 2, "type": "timeseries", "title": "API 延迟 P95（ms）", "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }, "targets": [ { "expr": "histogram_quantile(0.95, sum(rate(agentqa_http_request_duration_ms_bucket[5m])) by (le))", "legendFormat": "P95" } ] },
+    { "id": 3, "type": "timeseries", "title": "模型调用与服务限流错误", "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }, "targets": [ { "expr": "increase(agentqa_model_requests_total[5m])", "legendFormat": "模型调用（5 分钟）" }, { "expr": "increase(agentqa_model_provider_errors_total[5m])", "legendFormat": "模型错误（5 分钟）" } ] },
+    { "id": 4, "type": "timeseries", "title": "HTTP 错误率", "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }, "targets": [ { "expr": "rate(agentqa_http_errors_total[5m])", "legendFormat": "HTTP errors/sec" } ] },
+    { "id": 5, "type": "timeseries", "title": "文档索引队列", "gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 }, "targets": [ { "expr": "agentqa_document_jobs{state=\"waiting\"}", "legendFormat": "等待索引" }, { "expr": "agentqa_document_jobs{state=\"active\"}", "legendFormat": "索引中" }, { "expr": "agentqa_document_jobs{state=\"failed\"}", "legendFormat": "失败" } ] },
+    { "id": 6, "type": "timeseries", "title": "本地 Embedding 模型内存 / 显存", "gridPos": { "x": 12, "y": 16, "w": 12, "h": 8 }, "targets": [ { "expr": "agentqa_ollama_model_size_vram_bytes", "legendFormat": "{{model}} VRAM (bytes)" }, { "expr": "agentqa_ollama_model_size_bytes", "legendFormat": "{{model}} model size (bytes)" } ] }
+  ]
+}

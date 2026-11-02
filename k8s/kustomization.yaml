@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: agent-qa
+resources:
+  - namespace.yaml
+  - config.yaml
+  - data-services.yaml
+  - app-services.yaml
+  - web-entry.yaml
+configMapGenerator:
+  - name: nginx-config
+    files:
+      - config/nginx.conf
+  - name: prometheus-config
+    files:
+      - config/prometheus.yml
+  - name: grafana-datasource
+    files:
+      - config/grafana-provisioning/datasources/prometheus.yml
+  - name: grafana-dashboard-provider
+    files:
+      - config/grafana-provisioning/dashboards/provider.yml
+  - name: grafana-dashboard
+    files:
+      - config/grafana-dashboards/agent-qa-overview.json
+generatorOptions:
+  disableNameSuffixHash: true

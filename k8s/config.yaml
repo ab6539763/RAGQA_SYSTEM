@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-qa-config
+data:
+  NODE_ENV: production
+  PORT: "3000"
+  POSTGRES_DB: agentqa
+  POSTGRES_USER: agentqa
+  PGHOST: postgres
+  PGPORT: "5432"
+  PGDATABASE: agentqa
+  PGUSER: agentqa
+  PG_POOL_MAX: "20"
+  REDIS_URL: redis://redis:6379
+  S3_ENDPOINT: http://seaweedfs:8333
+  S3_BUCKET: agent-qa-uploads
+  S3_REGION: us-east-1
+  LLM_BASE_URL: https://api.deepseek.com
+  LLM_MODEL: deepseek-flash
+  EMBEDDING_PROVIDER: ollama
+  OLLAMA_BASE_URL: http://ollama:11434
+  EMBEDDING_MODEL: nomic-embed-text:latest
+  QDRANT_URL: http://qdrant:6333
+  QDRANT_COLLECTION: agent_qa_knowledge
+  MODEL_CONCURRENCY: "8"
+  CHAT_WORKER_CONCURRENCY: "16"
+  DOCUMENT_WORKER_CONCURRENCY: "2"
+  CHAT_RATE_LIMIT_PER_MINUTE: "30"
+  MAX_CHAT_QUEUE: "1000"

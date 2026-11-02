@@ -1,0 +1,14 @@
+{
+  "name": "agent-qa-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.js", "worker": "node worker.js", "dev": "node --watch server.js", "migrate": "node src/db.js" },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.883.0",
+    "bullmq": "^5.58.5",
+    "ioredis": "^5.7.0",
+    "pg": "^8.16.3"
+  },
+  "engines": { "node": ">=18" }
+}

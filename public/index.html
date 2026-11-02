@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6fa"><title>寻知 · 智能问答</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css">
+</head>
+<body><div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">知</div><div><strong>寻知</strong><span>Agent 问答工作台</span></div></div>
+    <button id="new-chat" class="new-chat"><span>＋</span> 开启新对话</button>
+    <div class="side-label">探索示例</div>
+    <div class="side-label session-label">历史会话</div><div id="session-list" class="session-list"></div>
+    <div class="side-label docs-label">知识文档</div><div class="doc-tools"><button id="upload-doc" class="upload-doc">＋ 批量上传</button><input id="doc-file" type="file" accept=".txt,.md,text/plain,text/markdown" multiple hidden><small>支持 TXT、Markdown，可多选；单文件最大 1 MB，最多 3 个并行上传</small><div id="doc-upload-status" class="doc-upload-status" aria-live="polite"></div><div id="document-list" class="document-list"></div></div>
+    <button class="suggestion" data-prompt="什么是 AI Agent？它由哪些部分组成？"><span class="suggestion-icon violet">✳</span><span><b>认识 Agent</b><small>了解智能体的工作方式</small></span><span class="arrow">↗</span></button>
+    <button class="suggestion" data-prompt="请介绍一下 RAG 是什么，以及它如何减少模型幻觉？"><span class="suggestion-icon orange">⌕</span><span><b>探索 RAG</b><small>从知识检索到可信回答</small></span><span class="arrow">↗</span></button>
+    <button class="suggestion" data-prompt="AI Agent 如何使用工具？举例说明一次工具调用流程。"><span class="suggestion-icon blue">⌘</span><span><b>工具调用</b><small>让 AI 拥有行动能力</small></span><span class="arrow">↗</span></button>
+    <div class="side-bottom"><div class="model-chip"><span class="live-dot"></span><span><b>本地演示模式</b><small>知识检索已就绪</small></span><span class="chip-spark">✦</span></div><p>你的问题和对话记录仅保存在本次浏览器会话中。</p></div>
+  </aside>
+  <main class="main-panel"><header class="topbar"><div class="breadcrumbs"><span class="crumb-muted">工作台</span><span class="crumb-sep">/</span><b>智能问答</b></div><div class="top-actions"><span class="privacy"><span>◉</span> 安全会话</span><button class="avatar" aria-label="用户">知</button></div></header>
+    <section class="conversation" id="conversation"><div class="welcome" id="welcome"><div class="eyebrow"><span class="eyebrow-dot"></span> AI AGENT · KNOWLEDGE ASSISTANT</div><h1>你好，今天想了解什么？</h1><p>提出问题，我会结合知识检索为你梳理思路、回答疑问，并标注参考来源。</p>
+      <div class="starter-grid"><button class="starter" data-prompt="什么是 AI Agent？它由哪些部分组成？"><span class="card-icon purple">✳</span><strong>什么是 AI Agent？</strong><span>了解智能体的组成与能力 <i>↗</i></span></button><button class="starter" data-prompt="请介绍一下 RAG 是什么，以及它如何减少模型幻觉？"><span class="card-icon amber">⌕</span><strong>RAG 如何增强回答？</strong><span>探索检索增强生成 <i>↗</i></span></button><button class="starter" data-prompt="AI Agent 如何使用工具？举例说明一次工具调用流程。"><span class="card-icon blue">⌘</span><strong>Agent 如何调用工具？</strong><span>从意图到执行的过程 <i>↗</i></span></button></div>
+      <div class="workflow"><div class="workflow-head"><span class="workflow-title">一问一答，循序有据</span><span class="workflow-note">AGENT WORKFLOW</span></div><div class="steps"><div><span class="step-no">01</span><b>理解问题</b><small>识别意图与上下文</small></div><span class="step-line"></span><div><span class="step-no">02</span><b>检索知识</b><small>查找相关参考内容</small></div><span class="step-line"></span><div><span class="step-no">03</span><b>组织回答</b><small>汇总信息并标注来源</small></div></div></div>
+    </div><div class="messages" id="messages" aria-live="polite"></div></section>
+    <footer class="composer-wrap"><form class="composer" id="chat-form"><div id="attachment-list" class="attachment-list"></div><textarea id="question" rows="1" maxlength="2000" placeholder="输入问题或附加图片、文本文件…" aria-label="输入问题"></textarea><div class="composer-bottom"><div class="composer-hint"><button type="button" id="attach-file" class="attach-file" title="添加图片或文本文件" aria-label="添加附件">＋</button><input id="chat-files" type="file" accept="image/*,.txt,.md,text/plain,text/markdown" multiple hidden><button type="button" id="web-search-toggle" class="web-search-toggle" aria-pressed="false" title="使用 DeepSeek 搜索互联网">⌕ 联网搜索</button><span class="sparkle">✧</span> <span>支持图片、TXT、Markdown；图片理解需配置在线模型</span></div><div class="send-group"><span id="char-count">0 / 2000</span><button id="send" class="send-button" type="submit" aria-label="发送问题"><span>发送</span><b>↑</b></button></div></div></form><div class="footer-note">寻知智能问答 <span>·</span> 由 Agent 工作流驱动</div></footer>
+  </main>
+</div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" crossorigin="anonymous"></script><script src="/app.js" defer></script></body></html>

@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+
+data/
+node_modules/
+.npm-cache/
+
+# 本地环境探测残留
+.wsl-status.txt

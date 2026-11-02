@@ -1,0 +1,40 @@
+# 宿主入口：Docker Desktop 的 LoadBalancer 实现为每个 Service 在 127.0.0.1
+# 上发布一个端口，因此这里与集群内 Service 分开定义，避免影响 nginx:80 的集群内抓取路径。
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-web
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - name: web
+      port: 18080
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-web
+spec:
+  type: LoadBalancer
+  selector:
+    app: grafana
+  ports:
+    - name: web
+      port: 3001
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-web
+spec:
+  type: LoadBalancer
+  selector:
+    app: prometheus
+  ports:
+    - name: web
+      port: 9090
+      targetPort: 9090
